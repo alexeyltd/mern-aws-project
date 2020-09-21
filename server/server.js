@@ -1,10 +1,11 @@
 const express = require("express");
+require("dotenv").config();
 const authRoutes = require("./routes/auth");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
 const mongoose = require("mongoose");
-require("dotenv").config();
+
 
 const app = express();
 

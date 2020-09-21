@@ -3,6 +3,7 @@ import Link from "next/link";
 import nProgress from "nprogress";
 import Router from "next/router";
 import "nprogress/nprogress.css";
+import { isAuthenticate, logout } from "../utils/auth";
 
 Router.onRouteChangeStart = (url) => nProgress.start();
 Router.onRouteChangeComplete = (url) => nProgress.done();
@@ -17,7 +18,7 @@ const Layout = ({ children }) => {
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
         crossorigin="anonymous"
       />
-      <link rel='stylesheet' href='/static/css/styles.css' />
+      <link rel="stylesheet" href="/static/css/styles.css" />
     </React.Fragment>
   );
 
@@ -28,16 +29,41 @@ const Layout = ({ children }) => {
           <a className="nav-link text-dark">HOME</a>
         </Link>
       </li>
-      <li className="nav-item">
-        <Link href="/login">
-          <a className="nav-link text-dark">Login</a>
-        </Link>
-      </li>
-      <li className="nav-item">
-        <Link href="/register">
-          <a className="nav-link text-dark">Register</a>
-        </Link>
-      </li>
+      {!isAuthenticate() && (
+        <React.Fragment>
+          <li className="nav-item">
+            <Link href="/login">
+              <a className="nav-link text-dark">Login</a>
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link href="/register">
+              <a className="nav-link text-dark">Register</a>
+            </Link>
+          </li>
+        </React.Fragment>
+      )}
+      {isAuthenticate() && isAuthenticate().role === "admin" && (
+        <li className="nav-item ml-auto">
+          <Link href="/admin">
+            <a className="nav-link text-dark">{isAuthenticate().name}</a>
+          </Link>
+        </li>
+      )}
+      {isAuthenticate() && isAuthenticate().role === "subscriber" && (
+        <li className="nav-item ml-auto">
+          <Link href="/user">
+            <a className="nav-link text-dark">{isAuthenticate().name}</a>
+          </Link>
+        </li>
+      )}
+      {isAuthenticate() && (
+        <li className="nav-item">
+          <a onClick={logout} className="nav-link text-dark">
+            Logout
+          </a>
+        </li>
+      )}
     </ul>
   );
 

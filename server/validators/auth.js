@@ -5,3 +5,8 @@ exports.userRegusterValidator = [
   check("email").isEmail().withMessage("Email should be valid"),
   check("password").isLength({ min: 6 }).withMessage("Password is less then 6"),
 ];
+
+exports.userLoginValidator = [
+  check("email").isEmail().withMessage("Email should be valid"),
+  check("password").isLength({ min: 6 }).withMessage("Password is less then 6"),
+];

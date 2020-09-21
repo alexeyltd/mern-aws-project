@@ -5,7 +5,7 @@ import axios from "axios";
 import {
   showSuccessMessage,
   showErrorMessage,
-} from "../../../components/alerts.component";
+} from "../../../utils/alerts";
 import { API } from "../../../config";
 import Layout from "../../../components/layout.component";
 

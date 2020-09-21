@@ -3,11 +3,12 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const { registerEmailParams } = require("../helpers/email");
 const shortId = require("shortid");
+const expressJwt = require("express-jwt");
 
 AWS.config.update({
-  accessKeyId: "AKIAVMH6DLZBF5TDUOOE",
-  secretAccessKey: "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",
-  region: "us-east-2",
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACESS_KEY,
+  region: process.env.AWS_REGION,
 });
 
 const ses = new AWS.SES({ apiVersion: "2010-12-01" });
@@ -82,3 +83,33 @@ exports.registerActivate = (req, res) => {
     });
   });
 };
+
+exports.login = (req, res) => {
+  const { email, password } = req.body;
+
+  User.findOne({ email }).exec((err, user) => {
+    if (err || !user) {
+      return res.status(404).json({
+        error: "User with that email does not exist.",
+      });
+    }
+    if (!user.authenticate(password)) {
+      return res.status(400).json({
+        error: "Email and password does not match.",
+      });
+    }
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+    const { _id, name, email, role } = user;
+    return res.json({
+      token,
+      user: { _id, name, email, role },
+    });
+  });
+};
+
+exports.requireSignin = expressJwt({
+  secret: process.env.JWT_SECRET,
+  algorithms: ["RS256"],
+});
