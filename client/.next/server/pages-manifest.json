@@ -2,5 +2,11 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/user": "pages/user.js"
+  "/auth/password/forgot": "pages/auth/password/forgot.js",
+  "/next/dist/pages/_error": "pages/next/dist/pages/_error.js",
+  "/auth/activate/[id]": "pages/auth/activate/[id].js",
+  "/auth/password/reset/[id]": "pages/auth/password/reset/[id].js",
+  "/login": "pages/login.js",
+  "/admin": "pages/admin.js",
+  "/": "pages/index.js"
 }

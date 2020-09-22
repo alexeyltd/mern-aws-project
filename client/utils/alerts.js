@@ -3,5 +3,5 @@ export const showSuccessMessage = (success) => (
 );
 
 export const showErrorMessage = (error) => (
-    <div className="alert alert-rror">{error}</div>
+    <div className="alert alert-danger">{error}</div>
   );
