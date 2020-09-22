@@ -1,6 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/user");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
@@ -20,6 +21,7 @@ app.use(bodyParser.json());
 app.use(cors({ origin: process.env.CLIENT_URL }));
 
 app.use("/api", authRoutes);
+app.use("/api", userRoutes);
 
 const port = process.env.PORT;
 

@@ -111,5 +111,36 @@ exports.login = (req, res) => {
 
 exports.requireSignin = expressJwt({
   secret: process.env.JWT_SECRET,
-  algorithms: ["RS256"],
+  algorithms: ["HS256"],
 });
+
+exports.authMiddleware = (req, res, callback) => {
+  const authUserId = req.user._id;
+  User.findOne({ _id: authUserId }).exec((err, user) => {
+    if (err || !user) {
+      return res.status(400).json({
+        error: `user not found`,
+      });
+    }
+    req.profile = user;
+    callback();
+  });
+};
+
+exports.adminAuthMiddleware = (req, res, callback) => {
+  const adminAuthUserId = req.user._id;
+  User.findOne({ _id: adminAuthUserId }).exec((err, user) => {
+    if (err || !user) {
+      return res.status(404).json({
+        error: `user not found`,
+      });
+    }
+    if (user.role !== "admin") {
+      return res.status(404).json({
+        error: `admin resource. Access denied.`,
+      });
+    }
+    req.profile = user;
+    callback();
+  });
+};
