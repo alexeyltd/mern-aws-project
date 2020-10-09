@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Link from "next/link";
+import Link from "next/Link";
 import nProgress from "nprogress";
 import Router from "next/router";
 import "nprogress/nprogress.css";
@@ -27,6 +27,16 @@ const Layout = ({ children }) => {
       <li className="nav-item">
         <Link href="/">
           <a className="nav-link text-dark">HOME</a>
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link href="/user/link/create">
+          <a
+            className="nav-link text-dark btn btn-success"
+            style={{ borderRadius: "0px" }}
+          >
+            Submit a link
+          </a>
         </Link>
       </li>
       {!isAuthenticate() && (

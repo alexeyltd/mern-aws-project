@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
+const linkRoutes = require("./routes/link");
 const categoryRoutes = require("./routes/category");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
@@ -20,13 +21,14 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use(morgan("dev"));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "5mb", type: "application/json" }));
 // app.use(cors());
 app.use(cors({ origin: process.env.CLIENT_URL }));
 
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", categoryRoutes);
+app.use("/api", linkRoutes);
 
 const port = process.env.PORT;
 

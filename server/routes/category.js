@@ -9,14 +9,8 @@ const { runValidation } = require("../validators");
 const { requireSignin, adminAuthMiddleware } = require("../controllers/auth");
 const {create, list, read, update, remove} = require('../controllers/category')
 
-router.post(
-  "/category",
-  categoryCreateValidator,
-  runValidation,
-  requireSignin,
-  adminAuthMiddleware,
-  create
-);
+router.post('/category', runValidation, requireSignin, adminAuthMiddleware, create);
+
 router.get("/categories", list);
 router.get("/category/:slug", read);
 router.patch(

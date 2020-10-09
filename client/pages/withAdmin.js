@@ -19,7 +19,7 @@ const withAdmin = (Page) => {
         });
         user = response.data;
       } catch (error) {
-        if (error.response.status === 401) {
+        if (error.response.data.status === 401) {
           user = null;
         }
       }

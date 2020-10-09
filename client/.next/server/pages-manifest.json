@@ -2,6 +2,5 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/auth/password/forgot": "pages/auth/password/forgot.js",
-  "/auth/password/reset/[id]": "pages/auth/password/reset/[id].js"
+  "/user/link/create": "pages/user/link/create.js"
 }
